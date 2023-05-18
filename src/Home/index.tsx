@@ -24,8 +24,19 @@ export default function Home() {
         return <AppLoading />;
     }
 
-    function removeTarefa(tarefa: string) {
-        console.log(`Clicando para remover a tarefa ${tarefa}`);
+    function removeTarefa(name: string) {
+        Alert.alert("Excluir", `Deseja excluir a tarefa ${name}?`, [
+        {
+            text: "Sim",
+            onPress: () => setTarefas(
+                prevState => prevState.filter(tarefa => tarefa !== name)
+            )
+        },
+        {
+            text: "Não",
+            style: "cancel"
+        }
+        ]);
     }
 
     function addTarefa() {
