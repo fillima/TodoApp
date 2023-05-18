@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     input: {
         flex: 1,
         color: colors.gray100,
-        backgroundColor: colors.gray400,
+        backgroundColor: colors.gray500,
         padding: 16,
         height: 54,
         fontSize: 16,
