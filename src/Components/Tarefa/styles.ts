@@ -15,6 +15,14 @@ export const styles = StyleSheet.create({
         color: colors.gray100,
         textAlign: "left",
         width: "78%",
-        marginLeft: 10
+        marginLeft: 10,
+        textDecorationLine: "none"
+    },
+    descriptionChecked: {
+        color: colors.gray100,
+        textAlign: "left",
+        width: "78%",
+        marginLeft: 10,
+        textDecorationLine: "line-through"
     }
 })
