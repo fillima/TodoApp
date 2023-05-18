@@ -15,7 +15,7 @@ export function Tarefa({name, onRemove}: Props) {
 
     function finishedTask(checked: string) {
         if (checked === "finished") {
-            setChecked("unfinished")
+            setChecked("unfinished");
         } else {
             setChecked("finished")
         }
@@ -30,7 +30,7 @@ export function Tarefa({name, onRemove}: Props) {
                 uncheckedColor={colors.blue}
                 color={colors.purple}
             />
-            <Text style={styles.description}>{name}</Text>
+            <Text style={[styles.description, checked === "finished" && styles.descriptionChecked]}>{name}</Text>
             <TouchableOpacity onPress={onRemove}>
                 <Ionicons name="trash-outline" size={24} color={colors.gray300} />
             </TouchableOpacity>
