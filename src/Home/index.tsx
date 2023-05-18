@@ -14,6 +14,7 @@ import { Tarefa } from "../Components/Tarefa";
 export default function Home() {
     const [tarefas, setTarefas] = useState<string[]>([]);
     const [tarefaName, setTarefaName] = useState("");
+    const [countTotal, setCountTotal] = useState(0);
 
     let [fontsLoaded] = useFonts({
         Inter_700Bold,
@@ -46,6 +47,7 @@ export default function Home() {
     
         setTarefas(prevState => [...prevState, tarefaName]);
         setTarefaName("");
+        setCountTotal(tarefas.length + 1);
     }
 
     return (
@@ -71,11 +73,11 @@ export default function Home() {
         <View style={styles.status}>
             <View style={styles.boxStatus}>
                 <Text style={styles.created}>Criadas</Text>
-                <Text style={styles.count}>0</Text>
+                <Text style={styles.count}>{countTotal}</Text>
             </View>
             <View style={styles.boxStatus}>
                 <Text style={styles.finished}>Concluídas</Text>
-                <Text style={styles.count}>0</Text>
+                <Text style={styles.count}></Text>
             </View>
         </View>
         <View style={styles.hr} />
