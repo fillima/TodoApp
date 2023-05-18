@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -12,7 +12,7 @@ import AppLoading from "expo-app-loading";
 import { Tarefa } from "../Components/Tarefa";
 
 export default function Home() {
-    const tarefas = ["Sou uma tarefa", "Sou outra tarefa demasiadamente grande para ver se cabe tudo nesse campo"];
+    const [tarefas, setTarefas] = useState<string[]>([]);
     const [tarefaName, setTarefaName] = useState("");
 
     let [fontsLoaded] = useFonts({
@@ -26,6 +26,15 @@ export default function Home() {
 
     function removeTarefa(tarefa: string) {
         console.log(`Clicando para remover a tarefa ${tarefa}`);
+    }
+
+    function addTarefa() {
+        if(tarefaName == '') {
+            return Alert.alert("Campo vazio", "Digite uma descrição para sua tarefa");
+        }
+    
+        setTarefas(prevState => [...prevState, tarefaName]);
+        setTarefaName("");
     }
 
     return (
@@ -42,7 +51,7 @@ export default function Home() {
                 onChangeText={setTarefaName}
                 value={tarefaName}
             />
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={addTarefa}>
                 <Text>
                     <AntDesign name="pluscircleo" size={18} color={colors.gray100} />
                 </Text>
