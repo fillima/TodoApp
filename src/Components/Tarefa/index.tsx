@@ -5,7 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { colors } from "../../Colors/colors";
 
-export function Tarefa() {
+type Props = {
+    name: string,
+    onRemove: () => void;
+}
+
+export function Tarefa({name, onRemove}: Props) {
     const [checked, setChecked] = useState("unfinished");
 
     function finishedTask(checked: string) {
@@ -25,8 +30,8 @@ export function Tarefa() {
                 uncheckedColor={colors.blue}
                 color={colors.purple}
             />
-            <Text style={styles.description}>Sou uma tarefa</Text>
-            <TouchableOpacity>
+            <Text style={styles.description}>{name}</Text>
+            <TouchableOpacity onPress={onRemove}>
                 <Ionicons name="trash-outline" size={24} color={colors.gray300} />
             </TouchableOpacity>
         </View>
