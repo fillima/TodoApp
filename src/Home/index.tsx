@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Alert, FlatList, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -15,6 +15,11 @@ export default function Home() {
     const [tarefas, setTarefas] = useState<string[]>([]);
     const [tarefaName, setTarefaName] = useState("");
     const [countTotal, setCountTotal] = useState(0);
+    const [countFinished, setCountFinished] = useState(0);
+
+    useEffect(() => {
+        setCountTotal(tarefas.length);
+    }, [tarefas]);
 
     let [fontsLoaded] = useFonts({
         Inter_700Bold,
@@ -29,15 +34,22 @@ export default function Home() {
         Alert.alert("Excluir", `Deseja excluir a tarefa ${name}?`, [
         {
             text: "Sim",
-            onPress: () => setTarefas(
-                prevState => prevState.filter(tarefa => tarefa !== name)
-            )
+            onPress: () => deleteTarefa(name)
         },
         {
             text: "Não",
             style: "cancel"
         }
         ]);
+    }
+
+    function deleteTarefa(name: string) {
+        setTarefas(
+            prevState => prevState.filter(tarefa => tarefa !== name)
+        );
+        if (countFinished > 0) {
+            setCountFinished(countFinished -1);
+        }
     }
 
     function addTarefa() {
@@ -47,7 +59,14 @@ export default function Home() {
     
         setTarefas(prevState => [...prevState, tarefaName]);
         setTarefaName("");
-        setCountTotal(tarefas.length + 1);
+    }
+
+    finishedTarefa = (e: boolean) => {
+        if (e === true) {
+            setCountFinished(countFinished +1);
+        } else {
+            setCountFinished(countFinished -1);
+        }
     }
 
     return (
@@ -77,7 +96,7 @@ export default function Home() {
             </View>
             <View style={styles.boxStatus}>
                 <Text style={styles.finished}>Concluídas</Text>
-                <Text style={styles.count}></Text>
+                <Text style={styles.count}>{countFinished}</Text>
             </View>
         </View>
         <View style={styles.hr} />
@@ -89,6 +108,7 @@ export default function Home() {
                 key={item}
                 name={item}
                 onRemove={() => removeTarefa(item)}
+                onFinished={this.finishedTarefa}
               />
             )}
             showsVerticalScrollIndicator={false}

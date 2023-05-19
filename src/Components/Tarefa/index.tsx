@@ -1,36 +1,38 @@
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { RadioButton } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "./styles";
 import { colors } from "../../Colors/colors";
+import Checkbox from "expo-checkbox";
 
 type Props = {
     name: string,
+    onFinished: () => void,
     onRemove: () => void;
 }
 
-export function Tarefa({name, onRemove}: Props) {
-    const [checked, setChecked] = useState("unfinished");
+export function Tarefa({name, onRemove, onFinished}: Props) {
+    const [checked, setChecked] = useState<boolean>(false);
 
-    function finishedTask(checked: string) {
-        if (checked === "finished") {
-            setChecked("unfinished");
+    function finishedTask(e: boolean) {
+        if (checked === true) {
+            setChecked(false);
+            onFinished(e);
         } else {
-            setChecked("finished")
+            setChecked(true);
+            onFinished(e);
         }
     }
 
     return(
         <View style={styles.container}>
-            <RadioButton
+            <Checkbox
                 value={checked}
-                status={checked === "finished" ? "checked" : "unchecked"}
-                onPress={() => finishedTask(checked)}
-                uncheckedColor={colors.blue}
-                color={colors.purple}
+                onValueChange={(e) => finishedTask(e)}
+                color={checked ? colors.purple : colors.blue}
+                style={styles.checkbox}
             />
-            <Text style={[styles.description, checked === "finished" && styles.descriptionChecked]}>{name}</Text>
+            <Text style={[styles.description, checked === true && styles.descriptionChecked]}>{name}</Text>
             <TouchableOpacity onPress={onRemove}>
                 <Ionicons name="trash-outline" size={24} color={colors.gray300} />
             </TouchableOpacity>

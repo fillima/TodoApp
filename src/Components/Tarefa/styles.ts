@@ -15,14 +15,21 @@ export const styles = StyleSheet.create({
         color: colors.gray100,
         textAlign: "left",
         width: "78%",
-        marginLeft: 10,
+        marginLeft: 15,
+        marginRight: 10,
         textDecorationLine: "none"
     },
     descriptionChecked: {
-        color: colors.gray100,
+        color: colors.gray300,
         textAlign: "left",
         width: "78%",
-        marginLeft: 10,
+        marginLeft: 15,
+        marginRight: 10,
         textDecorationLine: "line-through"
+    },
+    checkbox: {
+        borderRadius: 999,
+        width: 24,
+        height: 24
     }
 })
